@@ -1,0 +1,1564 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gecko Launcher — Legal Documents</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        heading: ['Oswald', 'sans-serif'],
+                        body: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        dark: '#0b0b15',
+                        neon: '#00ff9d',
+                        pink: '#ff006e',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        ::selection {
+            background: #00ff9d;
+            color: #000;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0b0b15;
+            color: #fff;
+        }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        .marquee-content {
+            animation: marquee 25s linear infinite;
+        }
+
+        .nav-link {
+            transition: all 0.3s ease;
+            border-left: 2px solid transparent;
+        }
+        .nav-link:hover {
+            color: #00ff9d;
+            border-left-color: rgba(0,255,157,0.3);
+            background: rgba(0,255,157,0.03);
+        }
+        .nav-link.active {
+            color: #00ff9d;
+            border-left-color: #00ff9d;
+            background: rgba(0,255,157,0.06);
+        }
+
+        .doc-section h2 {
+            font-family: 'Oswald', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: -0.02em;
+        }
+        .doc-section h3 {
+            font-family: 'Oswald', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 0.01em;
+        }
+        .doc-section ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        .doc-section ul li {
+            position: relative;
+            padding-left: 1.25rem;
+        }
+        .doc-section ul li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.6em;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #00ff9d;
+            opacity: 0.6;
+        }
+
+        .doc-section strong {
+            color: #fff;
+            font-weight: 600;
+        }
+
+        .text-glow {
+            text-shadow: 0 0 30px rgba(0,255,157,0.3);
+        }
+
+        .gradient-text {
+            background: linear-gradient(to right, #00ff9d, #3b82f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .blur-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(120px);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .toc-mobile {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease;
+        }
+        .toc-mobile.open {
+            max-height: 600px;
+            overflow-y: auto;
+        }
+
+        @media (max-width: 1023px) {
+            .sidebar {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Background Orbs -->
+    <div class="blur-orb w-96 h-96 bg-blue-600 opacity-10 top-0 left-1/4 fixed"></div>
+    <div class="blur-orb w-80 h-80 bg-pink opacity-5 bottom-1/4 right-0 fixed"></div>
+    <div class="blur-orb w-64 h-64 bg-neon opacity-5 top-1/2 left-0 fixed"></div>
+
+    <!-- Top Bar -->
+    <div class="fixed top-0 left-0 right-0 z-50 bg-dark/80 backdrop-blur-md border-b border-white/5">
+        <div class="max-w-7xl mx-auto px-6 py-3 flex items-center justify-between">
+            <a href="#top" class="flex items-center gap-3 group">
+                <div class="w-9 h-9 rounded-lg bg-gradient-to-tr from-neon to-blue-500 flex items-center justify-center">
+                    <span class="font-heading font-bold text-black text-sm">G</span>
+                </div>
+                <div>
+                    <span class="font-heading font-bold text-sm uppercase tracking-wider">Gecko Launcher</span>
+                    <span class="text-[10px] text-gray-500 block -mt-0.5 uppercase tracking-widest">Legal Documents</span>
+                </div>
+            </a>
+            <div class="hidden md:flex items-center gap-6 text-xs text-gray-400 uppercase tracking-widest">
+                <span>Effective: July 2026</span>
+                <a href="#contact" class="text-neon hover:text-white transition-colors">Contact</a>
+            </div>
+            <button id="mobileMenuBtn" class="lg:hidden p-2 text-gray-400 hover:text-neon transition-colors">
+                <i data-lucide="menu" class="w-5 h-5"></i>
+            </button>
+        </div>
+        <!-- Mobile TOC -->
+        <div id="mobileToc" class="toc-mobile no-scrollbar bg-dark/95 backdrop-blur-md border-t border-white/5 lg:hidden">
+            <div class="px-6 py-4 space-y-1" id="mobileNavLinks"></div>
+        </div>
+    </div>
+
+    <!-- Main Layout -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 pt-20 flex gap-8 relative z-10">
+
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar w-64 shrink-0 sticky top-20 self-start h-[calc(100vh-5rem)] overflow-y-auto no-scrollbar pb-8 hidden lg:block">
+            <div class="text-[10px] uppercase tracking-[0.2em] text-gray-500 font-bold mb-4 px-4">Documents</div>
+            <nav id="sidebarNav" class="space-y-0.5"></nav>
+            <div class="mt-8 mx-4 p-4 rounded-xl border border-white/5 bg-white/[0.02]">
+                <div class="text-[10px] uppercase tracking-[0.15em] text-gray-500 font-bold mb-2">Last Updated</div>
+                <div class="text-sm text-gray-300">July 25, 2026</div>
+                <div class="text-[10px] uppercase tracking-[0.15em] text-gray-500 font-bold mt-3 mb-2">Jurisdiction</div>
+                <div class="text-sm text-gray-300">Amman, Jordan</div>
+            </div>
+        </aside>
+
+        <!-- Content -->
+        <main class="flex-1 min-w-0 pb-32" id="top">
+
+            <!-- Hero Header -->
+            <header class="mb-16 pt-8">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-neon/20 bg-neon/5 mb-6">
+                    <span class="w-1.5 h-1.5 rounded-full bg-neon animate-pulse"></span>
+                    <span class="text-[10px] uppercase tracking-[0.15em] text-neon font-bold">Legal & Policies</span>
+                </div>
+                <h1 class="font-heading text-4xl sm:text-5xl md:text-6xl font-bold uppercase tracking-tighter leading-[0.9] mb-6">
+                    Legal<br><span class="gradient-text text-glow">Documents</span>
+                </h1>
+                <p class="text-gray-400 text-sm md:text-base max-w-xl leading-relaxed">
+                    All agreements, policies, and guidelines governing your use of Gecko Launcher. Please read these documents carefully before using the platform.
+                </p>
+            </header>
+
+            <!-- ====== 1. TERMS OF SERVICE ====== -->
+            <section id="tos" class="doc-section mb-20 scroll-mt-24">
+                <div class="flex items-center gap-3 mb-8">
+                    <div class="w-10 h-10 rounded-xl bg-neon/10 border border-neon/20 flex items-center justify-center">
+                        <i data-lucide="scroll-text" class="w-5 h-5 text-neon"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-2xl md:text-3xl font-bold">Terms of Service</h2>
+                        <span class="text-xs text-gray-500">V3 — Effective July 18, 2026</span>
+                    </div>
+                </div>
+
+                <div class="bg-white/[0.02] border border-white/5 rounded-2xl p-6 md:p-10 space-y-8">
+                    <div class="bg-neon/5 border border-neon/10 rounded-xl p-4 text-sm text-gray-300 leading-relaxed">
+                        <strong class="text-neon">PLEASE READ THESE TERMS CAREFULLY</strong>, including the Arbitration Clause and Class Action Waiver in Section 22, which affect your legal rights. By accessing or using Gecko Launcher, you agree to these Terms. If you do not agree, you must stop using Gecko Launcher.
+                    </div>
+
+                    <div>
+                        <p class="text-gray-400 text-sm leading-relaxed mb-6">Welcome to Gecko Launcher ("Gecko", "we," "our," or "the Service"). These Terms of Service ("Terms") govern your use of Gecko Launcher, including our software, website, applications, creator services, marketplace, payment systems, subscriptions, and any related services (collectively, the "Service").</p>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg font-bold mb-3 text-white">1. Eligibility and Age Requirements</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">You must be at least 13 years old to use Gecko (or the minimum age of digital consent in your jurisdiction, if higher). If you are under the age of majority in your jurisdiction, you may only use Gecko with the involvement and consent of a parent or legal guardian, who agrees to be bound by these Terms on your behalf.</p>
+                        <p class="text-gray-400 text-sm leading-relaxed mt-3">Gecko may request age verification and may suspend or terminate accounts that violate this requirement.</p>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg font-bold mb-3 text-white">2. Service Description</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">Gecko Launcher is a digital gaming platform that allows users to discover, download, manage, and access games. Gecko also provides tools that allow creators to publish and distribute their own content.</p>
+                        <p class="text-gray-400 text-sm leading-relaxed mt-3">Gecko may modify, update, suspend, or discontinue any feature of the Service at any time, with notice provided where required by law.</p>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg font-bold mb-3 text-white">3. Account Responsibility</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed mb-3">Users are responsible for:</p>
+                        <ul class="space-y-2 text-gray-400 text-sm leading-relaxed">
+                            <li>Maintaining accurate account information.</li>
+                            <li>Keeping login credentials secure.</li>
+                            <li>Protecting access to their email and linked accounts.</li>
+                            <li>All activity performed through their account, whether or not authorized.</li>
+                        </ul>
+                        <p class="text-gray-400 text-sm leading-relaxed mt-3">Gecko is not responsible for unauthorized access caused by weak passwords, shared credentials, user negligence, or compromised external accounts. Users should enable available security features (e.g., two-factor authentication) and report suspected unauthorized access immediately through official support channels.</p>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg font-bold mb-3 text-white">4. Platform Rules</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed mb-3">Users may not:</p>
+                        <ul class="space-y-2 text-gray-400 text-sm leading-relaxed">
+                            <li>Attack, disrupt, or degrade Gecko systems.</li>
+                            <li>Upload malicious software, malware, or exploit code.</li>
+                            <li>Abuse bugs, exploits, or unintended platform behavior.</li>
+                            <li>Attempt unauthorized access to accounts, systems, or data.</li>
+                            <li>Harass, threaten, or harm other users.</li>
+                            <li>Upload illegal content or content that infringes third-party rights.</li>
+                            <li>Circumvent age, region, or payment restrictions.</li>
+                            <li>Use the Service in violation of applicable export control or sanctions laws (see Section 20).</li>
+                        </ul>
+                        <p class="text-gray-400 text-sm leading-relaxed mt-3">Violations may result in warnings, account restrictions, content removal, withheld earnings, or permanent bans, at Gecko's discretion and proportionate to the violation.</p>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg font-bold mb-3 text-white">5. Creator Program</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed mb-3">Creators may publish games and digital content through Gecko. Creators represent and warrant that they:</p>
+                        <ul class="space-y-2 text-gray-400 text-sm leading-relaxed">
+                            <li>Own or hold all necessary rights and licenses to the content they publish.</li>
+                            <li>Have the legal right to distribute and monetize that content.</li>
+                            <li>Will comply with all applicable laws, including consumer protection, tax, and export laws.</li>
+                            <li>Will provide accurate descriptions, pricing, and age ratings.</li>
+                            <li>Will maintain and support their published content to a reasonable standard.</li>
+                        </ul>
+                        <p class="text-gray-400 text-sm leading-relaxed mt-3">Creators retain ownership of their intellectual property. By publishing content on Gecko, creators grant Gecko a non-exclusive, worldwide, royalty-free license to host, reproduce, display, distribute, adapt (e.g., for thumbnails, previews, or format compatibility), and promote their content as necessary to operate and market the platform. This license ends when the content is removed from Gecko, except for backup copies retained for a reasonable period and any use already made under the license prior to removal.</p>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg font-bold mb-3 text-white">6. Game Pricing</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">Creators may choose pricing options available through Gecko, including free games, paid games, and optional digital content. Creators control their pricing unless Gecko determines that pricing violates platform rules or applicable law (e.g., deceptive pricing). Gecko may support discounts, promotions, sales events, and price changes, and may require advance notice for significant pricing changes on live products.</p>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg font-bold mb-3 text-white">7. Creator Payments</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed mb-3">Creators may earn revenue from eligible purchases. To receive payments, creators must:</p>
+                        <ul class="space-y-2 text-gray-400 text-sm leading-relaxed">
+                            <li>Provide accurate payment information.</li>
+                            <li>Use a payment account they own or are authorized to use.</li>
+                            <li>Complete identity and tax verification requirements.</li>
+                            <li>Follow the applicable payment provider's rules.</li>
+                        </ul>
+                        <p class="text-gray-400 text-sm leading-relaxed mt-3">Gecko may require proof of payment account ownership before processing withdrawals and may withhold payment where fraud, chargebacks, or policy violations are suspected, pending investigation.</p>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg font-bold mb-3 text-white">8. Payment Processing</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">Withdrawal requests are reviewed before payment. Payments may be delayed due to security reviews, high request volume, technical issues, payment provider delays, account verification, or other operational limitations. Creator payments may take an extended period, including several months in unusual circumstances (e.g., fraud investigations or regulatory holds). Gecko does not guarantee immediate payment processing but will make reasonable efforts to process legitimate requests without undue delay.</p>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg font-bold mb-3 text-white">9. Payment Account Responsibility</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">Creators are responsible for securing their own payment accounts (e.g., PayPal, bank accounts, payment processors). Gecko is not responsible for losses caused by hacked accounts, stolen credentials, incorrect payment information supplied by the creator, or compromised external services. Creators must contact their payment provider directly for payment account security issues, though Gecko will cooperate reasonably with fraud investigations involving Gecko transactions.</p>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg font-bold mb-3 text-white">10. Content Removal and Bans</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed mb-3">Gecko may remove content or suspend accounts that violate these Terms, following notice where reasonably practicable except in cases of urgent risk (e.g., malware, illegal content, active harm). If content or accounts are removed:</p>
+                        <ul class="space-y-2 text-gray-400 text-sm leading-relaxed">
+                            <li>Content may become unavailable to users who acquired it, except where refunds are issued.</li>
+                            <li>Creator access may be restricted.</li>
+                            <li>Earnings directly connected to the violation may be withheld pending investigation.</li>
+                            <li>Deleted content may not be recoverable.</li>
+                        </ul>
+                        <p class="text-gray-400 text-sm leading-relaxed mt-3">Gecko is not required to restore removed content but will provide a reason for removal upon request, where legally permitted.</p>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg font-bold mb-3 text-white">11. Refunds and Chargebacks</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">Refunds and chargebacks may affect creator earnings. Gecko may deduct refunded amounts, hold payments during investigations, and adjust balances accordingly. Fraudulent purchases, refund abuse, or manipulation of the platform's payment systems may result in account action, including suspension or termination.</p>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg font-bold mb-3 text-white">12. Bugs, Errors, and Service Issues</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">Gecko is provided on an "as available" basis. Gecko does not guarantee that the platform will always be error-free, that games will always function correctly, that services will always be available, or that updates will never cause issues. Software may contain bugs, errors, compatibility issues, or unexpected behavior. Users acknowledge that they use Gecko at their own risk, to the extent permitted by applicable law.</p>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg font-bold mb-3 text-white">13. Third-Party Services</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">Gecko may depend on third-party services, including payment providers, hosting providers, authentication systems, and external software services. Gecko is not responsible for failures, outages, restrictions, or security issues caused by third-party providers, but will make reasonable efforts to notify users of known, material disruptions.</p>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg font-bold mb-3 text-white">14. Security Incidents</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">Gecko uses reasonable security practices, but no online service can guarantee complete protection. Gecko is not responsible for damages caused by cyberattacks, unauthorized access, data breaches, user account compromise, or third-party security failures, except to the extent caused by Gecko's own gross negligence or willful misconduct. Gecko will make reasonable efforts to investigate and respond to security incidents and will comply with applicable breach-notification laws.</p>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg font-bold mb-3 text-white">15. Intellectual Property</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed mb-3">All Gecko software, branding, logos, designs, and technology are owned by Gecko or its licensors. Users may not copy, modify, reverse engineer, decompile, or redistribute Gecko without permission, except to the extent such restriction is prohibited by applicable law.</p>
+                        <div class="ml-4 pl-4 border-l border-white/10">
+                            <h4 class="text-sm font-bold text-white mb-2">15.1 Copyright Complaints (Notice-and-Takedown)</h4>
+                            <p class="text-gray-400 text-sm leading-relaxed">Gecko respects intellectual property rights. If you believe content on Gecko infringes your copyright, submit a notice to Gecko's designated agent through official support channels including: (a) identification of the copyrighted work; (b) identification of the allegedly infringing material and its location; (c) your contact information; (d) a good-faith statement that use is unauthorized; and (e) a statement, under penalty of perjury, that the notice is accurate and you are authorized to act. Gecko may remove or disable access to material in response to valid notices and may terminate repeat infringers' accounts.</p>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg font-bold mb-3 text-white">16. Indemnification</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">You agree to indemnify, defend, and hold harmless Gecko, its officers, employees, and affiliates from any claims, damages, losses, liabilities, and expenses (including reasonable legal fees) arising out of: (a) your breach of these Terms; (b) content you upload or publish; (c) your violation of any law or third-party right; or (d) your use of the Service. This obligation applies to the extent permitted by applicable law and does not apply to the extent a claim arises from Gecko's own violation of law or these Terms.</p>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg font-bold mb-3 text-white">17. No Guarantee of Earnings</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">Creators acknowledge that publishing games on Gecko does not guarantee sales, downloads, revenue, player growth, or success. Creators are responsible for their own marketing, content quality, and business decisions.</p>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg font-bold mb-3 text-white">18. Disclaimer of Warranties</h3>
+                        <div class="bg-pink/5 border border-pink/10 rounded-xl p-4 text-sm text-gray-300 leading-relaxed uppercase font-bold tracking-wide">
+                            To the maximum extent permitted by applicable law, the Service is provided "as is" and "as available," without warranties of any kind, whether express, implied, or statutory, including without limitation warranties of merchantability, fitness for a particular purpose, title, and non-infringement. Gecko does not warrant that the Service will be uninterrupted, secure, or error-free. Nothing in this section limits any warranty that cannot be excluded under applicable law.
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg font-bold mb-3 text-white">19. Limitation of Liability</h3>
+                        <div class="bg-pink/5 border border-pink/10 rounded-xl p-4 text-sm text-gray-300 leading-relaxed uppercase font-bold tracking-wide mb-4">
+                            To the maximum extent permitted by applicable law, Gecko shall not be liable for any indirect, incidental, special, consequential, or punitive damages, including lost profits, lost revenue, lost creator earnings, game failures, data loss, account compromise, third-party failures, service interruptions, user mistakes, or creator-created content, even if Gecko has been advised of the possibility of such damages.
+                        </div>
+                        <p class="text-gray-400 text-sm leading-relaxed">Gecko's total aggregate liability for any claim arising out of or relating to these Terms or the Service shall not exceed the greater of (A) the amount you paid to Gecko in the 12 months preceding the claim, or (B) USD $100, except where prohibited by law.</p>
+                        <p class="text-gray-400 text-sm leading-relaxed mt-3">Some jurisdictions do not allow the exclusion or limitation of certain damages or warranties; in those jurisdictions, the above limitations apply only to the extent permitted by law.</p>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg font-bold mb-3 text-white">20. Export Compliance and Sanctions</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">You may not use Gecko if you are located in, or a resident of, a country or region subject to comprehensive trade sanctions, or if you are listed on any applicable government restricted-party list. You agree to comply with all applicable export control and economic sanctions laws.</p>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg font-bold mb-3 text-white">21. Governing Law</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">These Terms are governed by the laws of the Hashemite Kingdom of Jordan, without regard to conflict-of-law principles, except where mandatory local consumer-protection law in a user's home jurisdiction requires application of local law instead.</p>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg font-bold mb-3 text-white">22. Dispute Resolution, Arbitration, and Class Action Waiver</h3>
+                        <div class="bg-neon/5 border border-neon/10 rounded-xl p-4 text-sm text-gray-300 leading-relaxed mb-4">
+                            <strong class="text-neon">Please read this section carefully.</strong>
+                        </div>
+                        <p class="text-gray-400 text-sm leading-relaxed mb-3">Except where prohibited by law, you and Gecko agree that any dispute arising out of or relating to these Terms or the Service will be resolved through binding individual arbitration, rather than in court, except that either party may bring an individual claim in small claims court.</p>
+                        <p class="text-gray-400 text-sm leading-relaxed mb-3"><strong>Class Action Waiver:</strong> You and Gecko agree that disputes will be brought only in an individual capacity, and not as a plaintiff or class member in any purported class, consolidated, or representative proceeding.</p>
+                        <p class="text-gray-400 text-sm leading-relaxed mb-3"><strong>Opt-Out:</strong> You may opt out of this arbitration agreement within 30 days of first accepting these Terms by contacting Gecko through official support channels with a clear statement of intent to opt out.</p>
+                        <p class="text-gray-400 text-sm leading-relaxed"><strong>Jurisdictional Exception:</strong> Where applicable law does not permit mandatory arbitration or class action waivers (e.g., for certain consumer disputes in the EU, UK, or elsewhere), this section applies only to the extent enforceable, and disputes will instead be resolved exclusively in the competent courts of Amman, Jordan, under Section 21.</p>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg font-bold mb-3 text-white">23. Force Majeure</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">Gecko is not liable for delays or failures in performance resulting from causes beyond its reasonable control, including natural disasters, war, terrorism, riots, labor disputes, internet or infrastructure failures, government action, or pandemics.</p>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg font-bold mb-3 text-white">24. Changes to Gecko and These Terms</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">Gecko may update the platform, change features, change requirements, modify pricing, or remove services. Gecko may also revise these Terms from time to time. Material changes will be communicated through reasonable means (e.g., in-app notice or email), and continued use of the Service after changes take effect constitutes acceptance. Where required by law, Gecko will obtain affirmative consent to material changes.</p>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg font-bold mb-3 text-white">25. Termination</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">Gecko may suspend or terminate access when necessary to protect users, protect Gecko systems, prevent abuse, or enforce these Terms. Users may terminate their account at any time through account settings or official support channels. Sections that by their nature should survive termination (including but not limited to Indemnification, Limitation of Liability, Intellectual Property, and Dispute Resolution) will survive.</p>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg font-bold mb-3 text-white">26. Miscellaneous</h3>
+                        <div class="space-y-4 text-gray-400 text-sm leading-relaxed">
+                            <p><strong>Entire Agreement:</strong> These Terms, together with any referenced policies (e.g., Privacy Policy), constitute the entire agreement between you and Gecko regarding the Service, superseding prior agreements on this subject.</p>
+                            <p><strong>Severability:</strong> If any provision of these Terms is found unenforceable, the remaining provisions remain in full force, and the unenforceable provision will be modified to the minimum extent necessary to make it enforceable.</p>
+                            <p><strong>No Waiver:</strong> Gecko's failure to enforce any provision is not a waiver of its right to do so later.</p>
+                            <p><strong>Assignment:</strong> Gecko may assign these Terms in connection with a merger, acquisition, or sale of assets. Users may not assign their rights under these Terms without Gecko's consent.</p>
+                            <p><strong>Notices:</strong> Gecko may provide notices via the Service, email, or official support channels. Users must provide accurate contact information to receive notices.</p>
+                            <p><strong>Electronic Communications:</strong> By using Gecko, you consent to receive communications electronically, and agree that such communications satisfy any legal requirement that they be in writing.</p>
+                            <p><strong>Governing Language:</strong> These Terms are drafted in English. Any translation provided is for convenience only, and the English version controls in the event of any conflict or discrepancy.</p>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg font-bold mb-3 text-white">27. Agreement Acceptance</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">By using Gecko Launcher, you confirm that you have read these Terms, understand the risks of using online services, and agree to follow Gecko's rules.</p>
+                    </div>
+
+                    <div class="border-t border-white/5 pt-6 text-xs text-gray-500">
+                        Note: This document should be reviewed by a licensed attorney familiar with the jurisdictions Gecko operates in, particularly regarding arbitration enforceability, consumer protection law, and data privacy obligations (GDPR, CCPA, etc.).
+                    </div>
+                </div>
+            </section>
+
+            <!-- ====== 2. PRIVACY POLICY ====== -->
+            <section id="privacy" class="doc-section mb-20 scroll-mt-24">
+                <div class="flex items-center gap-3 mb-8">
+                    <div class="w-10 h-10 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center">
+                        <i data-lucide="shield-check" class="w-5 h-5 text-blue-400"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-2xl md:text-3xl font-bold">Privacy Policy</h2>
+                        <span class="text-xs text-gray-500">Effective July 25, 2026</span>
+                    </div>
+                </div>
+                <div class="bg-white/[0.02] border border-white/5 rounded-2xl p-6 md:p-10 space-y-8">
+                    <div>
+                        <h3 class="text-lg font-bold mb-3 text-white">1. Introduction</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">This Privacy Policy explains how Shadow Gecko ("Shadow Gecko," "we," "our," or "us") collects, uses, protects, and manages information when you use Gecko Launcher, including the launcher application, website, publishing services, creator tools, and related features. By using Gecko Launcher, you agree to the practices described in this Privacy Policy.</p>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg font-bold mb-3 text-white">2. About Shadow Gecko</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">Gecko Launcher is developed and operated by Shadow Gecko, an independent development organization creating software, gaming platforms, and digital services.</p>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg font-bold mb-3 text-white">3. Information We Collect</h3>
+                        <div class="space-y-5">
+                            <div>
+                                <h4 class="text-sm font-bold text-white mb-2">3.1 Account Information</h4>
+                                <ul class="space-y-1.5 text-gray-400 text-sm leading-relaxed">
+                                    <li>Username</li>
+                                    <li>Email address</li>
+                                    <li>Password data (stored securely)</li>
+                                    <li>Profile image or avatar</li>
+                                    <li>Account creation date</li>
+                                    <li>Account preferences</li>
+                                    <li>Security information</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4 class="text-sm font-bold text-white mb-2">3.2 Creator Information</h4>
+                                <ul class="space-y-1.5 text-gray-400 text-sm leading-relaxed">
+                                    <li>Creator username and developer profile information</li>
+                                    <li>Game titles, descriptions, files, screenshots, and images</li>
+                                    <li>Update information</li>
+                                    <li>Download statistics, ratings, and feedback</li>
+                                </ul>
+                                <p class="text-gray-400 text-sm leading-relaxed mt-2">Some creator information may be publicly visible.</p>
+                            </div>
+                            <div>
+                                <h4 class="text-sm font-bold text-white mb-2">3.3 Device Information</h4>
+                                <ul class="space-y-1.5 text-gray-400 text-sm leading-relaxed">
+                                    <li>Operating system and device specifications</li>
+                                    <li>Launcher version and hardware information</li>
+                                    <li>Crash reports, error logs, and performance information</li>
+                                    <li>IP address and security information</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4 class="text-sm font-bold text-white mb-2">3.4 Usage Information</h4>
+                                <ul class="space-y-1.5 text-gray-400 text-sm leading-relaxed">
+                                    <li>Games downloaded and launched</li>
+                                    <li>Features used</li>
+                                    <li>Update history and platform activity</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg font-bold mb-3 text-white">4. Payment Information</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed mb-3">Gecko Launcher may offer paid services, subscriptions, or features. Payments may be processed through third-party payment providers such as PayPal. Shadow Gecko does not store your full payment card or banking information. We may receive limited payment information including transaction ID, payment status, subscription status, and account associated with the payment.</p>
+                        <p class="text-gray-400 text-sm leading-relaxed">Payment providers process information according to their own privacy policies.</p>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg font-bold mb-3 text-white">5. How We Use Information</h3>
+                        <ul class="space-y-2 text-gray-400 text-sm leading-relaxed">
+                            <li>Create and manage accounts.</li>
+                            <li>Provide Gecko Launcher services.</li>
+                            <li>Allow users to publish and download games.</li>
+                            <li>Process subscriptions and payments.</li>
+                            <li>Improve performance and fix bugs and technical issues.</li>
+                            <li>Protect users from fraud and abuse.</li>
+                            <li>Maintain platform security.</li>
+                            <li>Provide support and develop new features.</li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg font-bold mb-3 text-white">6. Analytics and Diagnostics</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed mb-3">Gecko Launcher may collect anonymous or technical analytics, including:</p>
+                        <ul class="space-y-1.5 text-gray-400 text-sm leading-relaxed">
+                            <li>Crash reports</li>
+                            <li>Performance information</li>
+                            <li>Feature usage statistics</li>
+                            <li>Error information</li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg font-bold mb-3 text-white">7. User Content</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">Users may upload content including games, images, descriptions, profiles, updates, and other creator content. Users are responsible for ensuring they have the rights to upload their content.</p>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg font-bold mb-3 text-white">8. Public Information</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed mb-3">Some information may become publicly available, including developer names, game pages, public profiles, ratings, and reviews. Do not upload information you do not want publicly displayed.</p>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg font-bold mb-3 text-white">9. Information Sharing</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed mb-3">Shadow Gecko does not sell personal information. We may share information only when necessary:</p>
+                        <ul class="space-y-2 text-gray-400 text-sm leading-relaxed">
+                            <li>With service providers that help operate Gecko Launcher.</li>
+                            <li>With payment processors.</li>
+                            <li>To protect users and platform security.</li>
+                            <li>To comply with legal requirements.</li>
+                            <li>To investigate abuse, fraud, or violations.</li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg font-bold mb-3 text-white">10. Data Security</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed mb-3">Shadow Gecko uses reasonable security practices to protect user information, including secure authentication, access controls, encryption where appropriate, and security monitoring. However, no online service can guarantee complete security.</p>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg font-bold mb-3 text-white">11. International Users</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">Gecko Launcher is intended for users worldwide. Your information may be processed in different countries depending on the services used to operate Gecko Launcher. We take reasonable steps to protect information regardless of location.</p>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg font-bold mb-3 text-white">12. Your Privacy Rights</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed mb-3">Depending on your location, you may have rights including:</p>
+                        <ul class="space-y-2 text-gray-400 text-sm leading-relaxed">
+                            <li>Requesting access to your information.</li>
+                            <li>Requesting correction of inaccurate information.</li>
+                            <li>Requesting deletion of your information.</li>
+                            <li>Requesting information about how your data is used.</li>
+                        </ul>
+                        <p class="text-gray-400 text-sm leading-relaxed mt-3">To request privacy actions, contact Shadow Gecko through our official Discord server.</p>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg font-bold mb-3 text-white">13. Account Deletion</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed mb-3">Users may request account deletion. When an account is deleted:</p>
+                        <ul class="space-y-2 text-gray-400 text-sm leading-relaxed">
+                            <li>Personal information may be removed or anonymized.</li>
+                            <li>Some information may remain for security, legal, or financial reasons.</li>
+                            <li>Public content may be removed where possible.</li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg font-bold mb-3 text-white">14. Children's Privacy</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">Gecko Launcher is not intended for users who are below the minimum age required by applicable laws without appropriate permission. Shadow Gecko does not knowingly collect personal information from children who are not allowed to use the service.</p>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg font-bold mb-3 text-white">15. Third-Party Services</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed mb-3">Gecko Launcher may use third-party services, including PayPal, cloud hosting providers, authentication services, analytics services, and Discord. Third-party services have their own privacy policies. Shadow Gecko is not responsible for their privacy practices.</p>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg font-bold mb-3 text-white">16. Changes to This Privacy Policy</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">Shadow Gecko may update this Privacy Policy from time to time. When changes are made, the updated date will be changed at the top of this document. Continued use of Gecko Launcher means you accept the updated Privacy Policy.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ====== 3. TRUST & SAFETY ====== -->
+            <section id="trust" class="doc-section mb-20 scroll-mt-24">
+                <div class="flex items-center gap-3 mb-8">
+                    <div class="w-10 h-10 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center">
+                        <i data-lucide="shield-alert" class="w-5 h-5 text-purple-400"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-2xl md:text-3xl font-bold">Trust & Safety System</h2>
+                        <span class="text-xs text-gray-500">Effective July 25, 2026</span>
+                    </div>
+                </div>
+                <div class="bg-white/[0.02] border border-white/5 rounded-2xl p-6 md:p-10 space-y-8">
+                    <div>
+                        <h3 class="text-lg font-bold mb-3 text-white">1. Introduction</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed mb-3">The Gecko Launcher Trust & Safety System is designed to keep the platform safe, fair, and enjoyable for players, creators, and developers. Shadow Gecko uses this system to handle:</p>
+                        <ul class="space-y-2 text-gray-400 text-sm leading-relaxed">
+                            <li>User reports and content violations</li>
+                            <li>Security problems and creator issues</li>
+                            <li>Community safety concerns</li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg font-bold mb-3 text-white">2. Goals</h3>
+                        <ul class="space-y-2 text-gray-400 text-sm leading-relaxed">
+                            <li>Protect users and creators.</li>
+                            <li>Prevent abuse.</li>
+                            <li>Maintain a fair platform.</li>
+                            <li>Encourage a positive community.</li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg font-bold mb-3 text-white">3. Reporting System</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed mb-3">Users can report games, creators, players, reviews, messages, security issues, and other violations. Reports should include:</p>
+                        <ul class="space-y-2 text-gray-400 text-sm leading-relaxed">
+                            <li>Username or creator name.</li>
+                            <li>Description of the issue.</li>
+                            <li>Evidence if available.</li>
+                            <li>Relevant links or information.</li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg font-bold mb-3 text-white">4. Report Categories</h3>
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div class="bg-white/[0.02] border border-white/5 rounded-xl p-4">
+                                <h4 class="text-sm font-bold text-white mb-2">4.1 Safety Reports</h4>
+                                <ul class="space-y-1.5 text-gray-400 text-sm leading-relaxed">
+                                    <li>Threats</li>
+                                    <li>Harassment</li>
+                                    <li>Scams</li>
+                                    <li>Harmful behavior</li>
+                                </ul>
+                            </div>
+                            <div class="bg-white/[0.02] border border-white/5 rounded-xl p-4">
+                                <h4 class="text-sm font-bold text-white mb-2">4.2 Content Reports</h4>
+                                <ul class="space-y-1.5 text-gray-400 text-sm leading-relaxed">
+                                    <li>Copyright violations</li>
+                                    <li>Stolen content</li>
+                                    <li>Illegal content</li>
+                                    <li>Harmful downloads</li>
+                                </ul>
+                            </div>
+                            <div class="bg-white/[0.02] border border-white/5 rounded-xl p-4">
+                                <h4 class="text-sm font-bold text-white mb-2">4.3 Security Reports</h4>
+                                <ul class="space-y-1.5 text-gray-400 text-sm leading-relaxed">
+                                    <li>Malware</li>
+                                    <li>Exploits</li>
+                                    <li>Account vulnerabilities</li>
+                                    <li>Platform attacks</li>
+                                </ul>
+                            </div>
+                            <div class="bg-white/[0.02] border border-white/5 rounded-xl p-4">
+                                <h4 class="text-sm font-bold text-white mb-2">4.4 Developer Reports</h4>
+                                <ul class="space-y-1.5 text-gray-400 text-sm leading-relaxed">
+                                    <li>Fake games</li>
+                                    <li>Misleading descriptions</li>
+                                    <li>Unsafe software</li>
+                                    <li>Monetization abuse</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg font-bold mb-3 text-white">5. Moderation Process</h3>
+                        <div class="space-y-4">
+                            <div class="flex gap-4">
+                                <div class="w-8 h-8 rounded-full bg-neon/10 border border-neon/20 flex items-center justify-center shrink-0 mt-0.5">
+                                    <span class="text-xs font-bold text-neon">1</span>
+                                </div>
+                                <div>
+                                    <h4 class="text-sm font-bold text-white mb-1">Review</h4>
+                                    <p class="text-gray-400 text-sm leading-relaxed">Shadow Gecko reviews the report, evidence, account history, and related information.</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-4">
+                                <div class="w-8 h-8 rounded-full bg-neon/10 border border-neon/20 flex items-center justify-center shrink-0 mt-0.5">
+                                    <span class="text-xs font-bold text-neon">2</span>
+                                </div>
+                                <div>
+                                    <h4 class="text-sm font-bold text-white mb-1">Investigation</h4>
+                                    <p class="text-gray-400 text-sm leading-relaxed">Possible actions include contacting involved users, testing reported content, reviewing activity logs, and checking platform rules.</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-4">
+                                <div class="w-8 h-8 rounded-full bg-neon/10 border border-neon/20 flex items-center justify-center shrink-0 mt-0.5">
+                                    <span class="text-xs font-bold text-neon">3</span>
+                                </div>
+                                <div>
+                                    <h4 class="text-sm font-bold text-white mb-1">Decision</h4>
+                                    <p class="text-gray-400 text-sm leading-relaxed">Possible outcomes: no action, warning, content removal, feature restrictions, suspension, or permanent ban.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg font-bold mb-3 text-white">6. Enforcement Levels</h3>
+                        <div class="space-y-3">
+                            <div class="flex items-start gap-3 bg-white/[0.02] border border-white/5 rounded-xl p-4">
+                                <span class="text-xs font-bold text-yellow-400 bg-yellow-400/10 px-2 py-0.5 rounded shrink-0 mt-0.5">LVL 1</span>
+                                <div>
+                                    <h4 class="text-sm font-bold text-white mb-1">Warning</h4>
+                                    <p class="text-gray-400 text-sm leading-relaxed">Used for minor issues, minor rule violations, accidental mistakes, and first-time problems.</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-3 bg-white/[0.02] border border-white/5 rounded-xl p-4">
+                                <span class="text-xs font-bold text-orange-400 bg-orange-400/10 px-2 py-0.5 rounded shrink-0 mt-0.5">LVL 2</span>
+                                <div>
+                                    <h4 class="text-sm font-bold text-white mb-1">Temporary Restrictions</h4>
+                                    <p class="text-gray-400 text-sm leading-relaxed">Limited features, temporary chat restrictions, temporary publishing restrictions.</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-3 bg-white/[0.02] border border-white/5 rounded-xl p-4">
+                                <span class="text-xs font-bold text-red-400 bg-red-400/10 px-2 py-0.5 rounded shrink-0 mt-0.5">LVL 3</span>
+                                <div>
+                                    <h4 class="text-sm font-bold text-white mb-1">Suspension</h4>
+                                    <p class="text-gray-400 text-sm leading-relaxed">Used for serious violations: repeated abuse, scams, security problems, harmful content.</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-3 bg-white/[0.02] border border-white/5 rounded-xl p-4">
+                                <span class="text-xs font-bold text-pink bg-pink/10 px-2 py-0.5 rounded shrink-0 mt-0.5">LVL 4</span>
+                                <div>
+                                    <h4 class="text-sm font-bold text-white mb-1">Permanent Removal</h4>
+                                    <p class="text-gray-400 text-sm leading-relaxed">Used for severe cases: malware distribution, serious hacking attempts, repeated harmful behavior, major fraud.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg font-bold mb-3 text-white">7. Creator Strike System</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed mb-3">Creators may receive strikes for violations:</p>
+                        <div class="space-y-2">
+                            <div class="flex items-center gap-3 text-sm">
+                                <span class="w-6 h-6 rounded-full bg-yellow-400/10 flex items-center justify-center text-xs font-bold text-yellow-400 shrink-0">1</span>
+                                <span class="text-gray-400">Warning and required correction.</span>
+                            </div>
+                            <div class="flex items-center gap-3 text-sm">
+                                <span class="w-6 h-6 rounded-full bg-orange-400/10 flex items-center justify-center text-xs font-bold text-orange-400 shrink-0">2</span>
+                                <span class="text-gray-400">Temporary removal of publishing or monetization features.</span>
+                            </div>
+                            <div class="flex items-center gap-3 text-sm">
+                                <span class="w-6 h-6 rounded-full bg-red-400/10 flex items-center justify-center text-xs font-bold text-red-400 shrink-0">3</span>
+                                <span class="text-gray-400">Creator account suspension or removal.</span>
+                            </div>
+                        </div>
+                        <p class="text-gray-400 text-sm leading-relaxed mt-3">Severe violations may skip the strike system.</p>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg font-bold mb-3 text-white">8. Appeals System</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed mb-3">Users and creators may appeal moderation actions. An appeal should include:</p>
+                        <ul class="space-y-2 text-gray-400 text-sm leading-relaxed">
+                            <li>Account name.</li>
+                            <li>Action received.</li>
+                            <li>Reason for appeal.</li>
+                            <li>Additional information.</li>
+                        </ul>
+                        <p class="text-gray-400 text-sm leading-relaxed mt-3">Shadow Gecko will review appeals fairly.</p>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg font-bold mb-3 text-white">9–14. Additional Provisions</h3>
+                        <div class="space-y-4 text-gray-400 text-sm leading-relaxed">
+                            <p><strong>Account Safety:</strong> Users should protect their passwords, enable available security features, and avoid sharing account information. Shadow Gecko will never request passwords, private authentication codes, or unnecessary personal information.</p>
+                            <p><strong>Anti-Fraud Protection:</strong> Shadow Gecko may monitor for fake downloads, fake reviews, payment abuse, account manipulation, and suspicious activity.</p>
+                            <p><strong>Developer Safety:</strong> Shadow Gecko may review games for malware, security risks, misleading behavior, and policy violations.</p>
+                            <p><strong>Transparency:</strong> Shadow Gecko aims to provide clear rules, fair enforcement, and reasonable explanations when possible. Some security information may remain private to protect the platform.</p>
+                            <p><strong>User Privacy:</strong> Trust & Safety actions follow the Gecko Launcher Privacy Policy. Information collected during investigations is used only for safety, security, enforcement, and legal compliance.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ====== 4. EULA ====== -->
+            <section id="eula" class="doc-section mb-20 scroll-mt-24">
+                <div class="flex items-center gap-3 mb-8">
+                    <div class="w-10 h-10 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center">
+                        <i data-lucide="file-code" class="w-5 h-5 text-cyan-400"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-2xl md:text-3xl font-bold">End User License Agreement</h2>
+                        <span class="text-xs text-gray-500">Effective July 25, 2026</span>
+                    </div>
+                </div>
+                <div class="bg-white/[0.02] border border-white/5 rounded-2xl p-6 md:p-10 space-y-8">
+                    <div>
+                        <h3 class="text-lg font-bold mb-3 text-white">1. Introduction</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">This End User License Agreement ("EULA") is an agreement between you ("User") and Shadow Gecko regarding your use of Gecko Launcher software, including the launcher application, updates, related software components, and official tools and features. By installing, opening, or using Gecko Launcher, you agree to this EULA.</p>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold mb-3 text-white">2. Software Ownership</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">Gecko Launcher and all related software—including source code, designs, logos, branding, user interfaces, official assets, and features—are owned by Shadow Gecko or its licensors. This EULA does not transfer ownership of Gecko Launcher to you.</p>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold mb-3 text-white">3. License Grant</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed mb-3">Shadow Gecko grants you a limited, personal, non-exclusive, non-transferable license to use Gecko Launcher. This license allows you to:</p>
+                        <ul class="space-y-2 text-gray-400 text-sm leading-relaxed">
+                            <li>Install Gecko Launcher on supported devices.</li>
+                            <li>Use Gecko Launcher for personal purposes.</li>
+                            <li>Access available features.</li>
+                            <li>Download and play available content.</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold mb-3 text-white">4. Restrictions</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed mb-3">You may not:</p>
+                        <ul class="space-y-2 text-gray-400 text-sm leading-relaxed">
+                            <li>Copy or redistribute Gecko Launcher without permission.</li>
+                            <li>Modify the launcher software.</li>
+                            <li>Reverse engineer, decompile, or attempt to extract source code.</li>
+                            <li>Remove copyright notices.</li>
+                            <li>Create unauthorized versions of Gecko Launcher.</li>
+                            <li>Use Gecko Launcher to harm users or services.</li>
+                            <li>Bypass security features.</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold mb-3 text-white">5. Updates and Changes</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">Shadow Gecko may release updates, add or remove features, change system requirements, and improve security. Some updates may be required to continue using Gecko Launcher.</p>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold mb-3 text-white">6. User Accounts</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">Some features may require an account. Users are responsible for protecting account information, keeping login details secure, and following Gecko Launcher rules. Account use is also subject to the Terms of Service, Privacy Policy, and Community Guidelines.</p>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold mb-3 text-white">7–8. Third-Party & User-Generated Content</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">Gecko Launcher may provide access to third-party content. Shadow Gecko does not own all third-party content and is not responsible for creator-made games, third-party software, or external services. Users and creators may upload content; uploading does not give Shadow Gecko ownership—content ownership remains with the creator unless otherwise agreed.</p>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold mb-3 text-white">9–10. Availability & Security</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">Shadow Gecko does not guarantee that Gecko Launcher will always be available, work on every device, be free of errors, or continue operating forever. Users must not attempt to hack Gecko Launcher, exploit vulnerabilities, create harmful modifications, or distribute malicious software. Security issues should be reported through official support channels.</p>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold mb-3 text-white">11. Termination of License</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">This license may end if you violate this EULA, violate Gecko Launcher policies, or misuse the software. When the license ends, you must stop using Gecko Launcher.</p>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold mb-3 text-white">12–13. Disclaimer & Limitation of Liability</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">Gecko Launcher is provided on an "as available" basis. To the maximum extent allowed by law, Shadow Gecko is not responsible for loss of data, device issues caused by misuse, third-party content, service interruptions, or loss of profits.</p>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold mb-3 text-white">14. Changes to This EULA</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">Shadow Gecko may update this EULA as Gecko Launcher develops. Continued use after updates means acceptance.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ====== 5. SAFETY REPORTING ====== -->
+            <section id="reporting" class="doc-section mb-20 scroll-mt-24">
+                <div class="flex items-center gap-3 mb-8">
+                    <div class="w-10 h-10 rounded-xl bg-red-500/10 border border-red-500/20 flex items-center justify-center">
+                        <i data-lucide="flag" class="w-5 h-5 text-red-400"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-2xl md:text-3xl font-bold">Safety Reporting Policy</h2>
+                        <span class="text-xs text-gray-500">Effective July 25, 2026</span>
+                    </div>
+                </div>
+                <div class="bg-white/[0.02] border border-white/5 rounded-2xl p-6 md:p-10 space-y-8">
+                    <div>
+                        <h3 class="text-lg font-bold mb-3 text-white">1. Purpose</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">Shadow Gecko wants Gecko Launcher to remain a safe platform for players, creators, and developers. This policy explains how users can report harmful content, security issues, copyright violations, abuse, dangerous behavior, and platform problems.</p>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold mb-3 text-white">2. What Should Be Reported</h3>
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div class="bg-white/[0.02] border border-white/5 rounded-xl p-4">
+                                <h4 class="text-sm font-bold text-white mb-2">Security Issues</h4>
+                                <ul class="space-y-1.5 text-gray-400 text-sm leading-relaxed">
+                                    <li>Account security problems</li>
+                                    <li>Exploits and vulnerabilities</li>
+                                    <li>Malicious software</li>
+                                </ul>
+                            </div>
+                            <div class="bg-white/[0.02] border border-white/5 rounded-xl p-4">
+                                <h4 class="text-sm font-bold text-white mb-2">Harmful Content</h4>
+                                <ul class="space-y-1.5 text-gray-400 text-sm leading-relaxed">
+                                    <li>Malware and stolen content</li>
+                                    <li>Illegal content</li>
+                                    <li>Dangerous downloads</li>
+                                </ul>
+                            </div>
+                            <div class="bg-white/[0.02] border border-white/5 rounded-xl p-4">
+                                <h4 class="text-sm font-bold text-white mb-2">Community Problems</h4>
+                                <ul class="space-y-1.5 text-gray-400 text-sm leading-relaxed">
+                                    <li>Harassment and threats</li>
+                                    <li>Scams and abuse</li>
+                                </ul>
+                            </div>
+                            <div class="bg-white/[0.02] border border-white/5 rounded-xl p-4">
+                                <h4 class="text-sm font-bold text-white mb-2">Creator Violations</h4>
+                                <ul class="space-y-1.5 text-gray-400 text-sm leading-relaxed">
+                                    <li>Copyright infringement</li>
+                                    <li>Fake information and harmful games</li>
+                                    <li>Rule violations</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold mb-3 text-white">3. How to Report</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed mb-3">Reports can be submitted through the Shadow Gecko Discord Server. A report should include:</p>
+                        <ul class="space-y-2 text-gray-400 text-sm leading-relaxed">
+                            <li>Your username.</li>
+                            <li>Description of the issue.</li>
+                            <li>Link or location of the content.</li>
+                            <li>Evidence when available.</li>
+                            <li>Any relevant details.</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold mb-3 text-white">4. Security Reports</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed mb-3">Security issues should be reported privately. Users should not:</p>
+                        <ul class="space-y-2 text-gray-400 text-sm leading-relaxed">
+                            <li>Publicly release vulnerabilities before reporting.</li>
+                            <li>Exploit security problems.</li>
+                            <li>Access information they are not authorized to access.</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold mb-3 text-white">5. Investigation Process</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">After receiving a report, Shadow Gecko may review the information, investigate the issue, contact involved users, remove content, restrict accounts, and apply necessary actions.</p>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold mb-3 text-white">6. False Reports</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">Reports should be made honestly. Submitting intentionally false reports may result in restrictions.</p>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold mb-3 text-white">7. Emergency Situations</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">If a situation involves immediate danger or illegal activity, users should contact appropriate local authorities.</p>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold mb-3 text-white">8. Privacy</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">Information provided in reports will be handled according to the Gecko Launcher Privacy Policy.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ====== 6. DPA ====== -->
+            <section id="dpa" class="doc-section mb-20 scroll-mt-24">
+                <div class="flex items-center gap-3 mb-8">
+                    <div class="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center">
+                        <i data-lucide="database" class="w-5 h-5 text-emerald-400"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-2xl md:text-3xl font-bold">Data Processing Agreement</h2>
+                        <span class="text-xs text-gray-500">Effective July 25, 2026</span>
+                    </div>
+                </div>
+                <div class="bg-white/[0.02] border border-white/5 rounded-2xl p-6 md:p-10 space-y-8">
+                    <div>
+                        <h3 class="text-lg font-bold mb-3 text-white">1. Introduction</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed mb-3">This Data Processing Agreement ("DPA") explains how Shadow Gecko processes and protects information when developers, creators, or third-party partners use Gecko Launcher services. This agreement applies alongside the Privacy Policy, Terms of Service, Creator Agreement, and Developer API Agreement.</p>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold mb-3 text-white">3. Purpose of Data Processing</h3>
+                        <ul class="space-y-2 text-gray-400 text-sm leading-relaxed">
+                            <li>Provide Gecko Launcher services.</li>
+                            <li>Operate accounts and creator tools.</li>
+                            <li>Deliver game downloads and updates.</li>
+                            <li>Improve platform performance.</li>
+                            <li>Maintain security.</li>
+                            <li>Prevent abuse and fraud.</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold mb-3 text-white">4. Types of Information Processed</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">Depending on the services used, information may include account information, developer information, game information, download statistics, technical information, security information, and support communications.</p>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold mb-3 text-white">5. Data Protection Responsibilities</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed mb-3"><strong>Shadow Gecko will:</strong></p>
+                        <ul class="space-y-2 text-gray-400 text-sm leading-relaxed mb-4">
+                            <li>Use reasonable security practices.</li>
+                            <li>Only process information necessary to provide services.</li>
+                            <li>Protect user information from unauthorized access.</li>
+                        </ul>
+                        <p class="text-gray-400 text-sm leading-relaxed mb-3"><strong>Developers and partners must:</strong></p>
+                        <ul class="space-y-2 text-gray-400 text-sm leading-relaxed">
+                            <li>Respect user privacy and follow applicable privacy laws.</li>
+                            <li>Avoid collecting unnecessary information.</li>
+                            <li>Protect any information they receive.</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold mb-3 text-white">6–7. Third-Party Services & International Processing</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">Shadow Gecko may use trusted third-party services for hosting, payments, security, analytics, and infrastructure. Because Gecko Launcher is a global service, information may be processed in different countries. Shadow Gecko takes reasonable steps to protect information during international transfers.</p>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold mb-3 text-white">8. Security Requirements</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed mb-3">Developers and partners must not:</p>
+                        <ul class="space-y-2 text-gray-400 text-sm leading-relaxed">
+                            <li>Attempt unauthorized access.</li>
+                            <li>Misuse user information.</li>
+                            <li>Share private data publicly.</li>
+                            <li>Create insecure integrations.</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold mb-3 text-white">9–10. Data Requests & Ending Data Processing</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">Users may request information about their data according to applicable privacy laws through the official Discord support channel. When services end, Shadow Gecko may delete or anonymize information when appropriate. Some information may be retained for legal requirements, security purposes, fraud prevention, and financial records.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ====== 7. CREATOR AGREEMENT ====== -->
+            <section id="creator" class="doc-section mb-20 scroll-mt-24">
+                <div class="flex items-center gap-3 mb-8">
+                    <div class="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center">
+                        <i data-lucide="palette" class="w-5 h-5 text-amber-400"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-2xl md:text-3xl font-bold">Creator Agreement</h2>
+                        <span class="text-xs text-gray-500">Effective July 25, 2026</span>
+                    </div>
+                </div>
+                <div class="bg-white/[0.02] border border-white/5 rounded-2xl p-6 md:p-10 space-y-8">
+                    <div>
+                        <h3 class="text-lg font-bold mb-3 text-white">1. Introduction</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">This Creator Agreement explains the rules and responsibilities for developers and creators who publish games, applications, or other content through Gecko Launcher. By publishing content on Gecko Launcher, you agree to this Creator Agreement.</p>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold mb-3 text-white">2. Creator Responsibilities</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed mb-3">Creators are responsible for all content they upload, including game files, images, videos, descriptions, updates, and promotional materials. Creators must ensure their content:</p>
+                        <ul class="space-y-2 text-gray-400 text-sm leading-relaxed">
+                            <li>Does not violate laws.</li>
+                            <li>Does not contain stolen content.</li>
+                            <li>Does not infringe copyrights or trademarks.</li>
+                            <li>Does not contain harmful software.</li>
+                            <li>Does not intentionally damage users' devices.</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold mb-3 text-white">3. Ownership of Content</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed mb-3">Creators retain ownership of content they create and upload. By uploading content to Gecko Launcher, you grant Shadow Gecko permission to:</p>
+                        <ul class="space-y-2 text-gray-400 text-sm leading-relaxed">
+                            <li>Host, display, and distribute your content on Gecko Launcher.</li>
+                            <li>Promote your content on Gecko Launcher platforms.</li>
+                        </ul>
+                        <p class="text-gray-400 text-sm leading-relaxed mt-3">This permission exists only to operate and improve Gecko Launcher.</p>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold mb-3 text-white">4. Copyright and Intellectual Property</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed mb-3">Creators must have permission to use all code, assets, models, music, images, logos, and other materials. If a creator uploads content they do not own, Shadow Gecko may remove the content.</p>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold mb-3 text-white">5. Malicious Software</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed mb-3">Creators may not upload viruses, malware, spyware, cryptocurrency miners, harmful programs, or software designed to exploit users. Violations may result in immediate removal and account termination.</p>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold mb-3 text-white">6. Payments and Revenue</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">If Gecko Launcher offers creator payments, revenue sharing, or monetization features, terms may vary depending on the program. Creators must provide accurate payment information and are responsible for taxes and legal obligations.</p>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold mb-3 text-white">7–9. Content Removal, Account Termination & Changes</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">Shadow Gecko may remove content that violates this agreement, violates laws, harms users, creates security risks, or receives valid copyright complaints. Serious violations may result in account suspension or termination. Shadow Gecko may update this Creator Agreement as Gecko Launcher develops.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ====== 8. DMCA ====== -->
+            <section id="dmca" class="doc-section mb-20 scroll-mt-24">
+                <div class="flex items-center gap-3 mb-8">
+                    <div class="w-10 h-10 rounded-xl bg-rose-500/10 border border-rose-500/20 flex items-center justify-center">
+                        <i data-lucide="copyright" class="w-5 h-5 text-rose-400"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-2xl md:text-3xl font-bold">DMCA & Copyright Policy</h2>
+                        <span class="text-xs text-gray-500">Effective July 25, 2026</span>
+                    </div>
+                </div>
+                <div class="bg-white/[0.02] border border-white/5 rounded-2xl p-6 md:p-10 space-y-8">
+                    <div>
+                        <h3 class="text-lg font-bold mb-3 text-white">1. Copyright Protection</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">Shadow Gecko respects intellectual property rights. Creators who upload content to Gecko Launcher must only upload content they own or have permission to distribute.</p>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold mb-3 text-white">2. Reporting Copyright Infringement</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed mb-3">If you believe content on Gecko Launcher violates your copyright, you may report it through the Shadow Gecko Discord support channel. A copyright report should include:</p>
+                        <ul class="space-y-2 text-gray-400 text-sm leading-relaxed">
+                            <li>Your name or organization.</li>
+                            <li>Contact information.</li>
+                            <li>Description of the copyrighted work.</li>
+                            <li>Link or identification of the allegedly infringing content.</li>
+                            <li>Explanation of why you believe it violates your rights.</li>
+                            <li>A statement confirming the information is accurate.</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold mb-3 text-white">3. Investigation Process</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">After receiving a valid copyright complaint, Shadow Gecko may review the complaint, contact the uploader, remove or restrict access to content, and take additional action if necessary.</p>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold mb-3 text-white">4. False Reports</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">Submitting false copyright claims may result in restrictions or removal of reporting privileges.</p>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold mb-3 text-white">5. Counter Notifications</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed mb-3">Creators may contact Shadow Gecko if they believe their content was removed incorrectly. They should provide:</p>
+                        <ul class="space-y-2 text-gray-400 text-sm leading-relaxed">
+                            <li>Identification of the removed content.</li>
+                            <li>Explanation of ownership or permission.</li>
+                            <li>Reason the removal should be reconsidered.</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold mb-3 text-white">6. Repeat Violations</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">Accounts that repeatedly upload copyrighted content without permission may be suspended or permanently removed.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ====== 9. COMMUNITY GUIDELINES ====== -->
+            <section id="community" class="doc-section mb-20 scroll-mt-24">
+                <div class="flex items-center gap-3 mb-8">
+                    <div class="w-10 h-10 rounded-xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center">
+                        <i data-lucide="users" class="w-5 h-5 text-indigo-400"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-2xl md:text-3xl font-bold">Community Guidelines</h2>
+                        <span class="text-xs text-gray-500">Effective July 25, 2026</span>
+                    </div>
+                </div>
+                <div class="bg-white/[0.02] border border-white/5 rounded-2xl p-6 md:p-10 space-y-8">
+                    <div>
+                        <h3 class="text-lg font-bold mb-3 text-white">1. Purpose</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">These Community Guidelines help keep Gecko Launcher safe, fair, and enjoyable for players, creators, and developers. These rules apply to Gecko Launcher, Shadow Gecko Discord communities, official community spaces, and creator areas.</p>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold mb-3 text-white">2. Age Requirement</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">You must be at least <strong class="text-white">13 years old</strong> to use Gecko Launcher or Shadow Gecko services. Users who do not meet the age requirement may not create accounts or participate in Gecko Launcher communities.</p>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold mb-3 text-white">3. Respect Others</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed mb-3">Users must not:</p>
+                        <ul class="space-y-2 text-gray-400 text-sm leading-relaxed">
+                            <li>Harass, threaten, or bully others.</li>
+                            <li>Encourage harmful behavior.</li>
+                            <li>Target people with hateful content.</li>
+                        </ul>
+                        <p class="text-gray-400 text-sm leading-relaxed mt-3">Treat other players, creators, and developers respectfully.</p>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold mb-3 text-white">4. No Illegal or Harmful Content</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed mb-3">Users may not upload or share:</p>
+                        <ul class="space-y-2 text-gray-400 text-sm leading-relaxed">
+                            <li>Malware, viruses, or dangerous files.</li>
+                            <li>Stolen content or illegal content.</li>
+                            <li>Content designed to harm users.</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold mb-3 text-white">5. Fair Play</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed mb-3">Users must not:</p>
+                        <ul class="space-y-2 text-gray-400 text-sm leading-relaxed">
+                            <li>Cheat or exploit games unfairly.</li>
+                            <li>Manipulate ratings or reviews.</li>
+                            <li>Abuse bugs for unfair advantages.</li>
+                            <li>Attack or disrupt services.</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold mb-3 text-white">6. Creator Rules</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed mb-3">Creators must upload only content they have permission to use, provide accurate information, avoid misleading players, and keep downloads safe. Creators must not upload stolen games, pirated content, malware, or fake/harmful applications.</p>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold mb-3 text-white">7. Advertising and Promotion</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed mb-3">Users must not spam advertisements, scam other users, mislead users about products or games, or use fake reviews or downloads.</p>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold mb-3 text-white">8. Reporting Problems</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">Users should report bugs, security issues, harmful content, and rule violations through the official Shadow Gecko Discord server. Reports should include username, description of the issue, and evidence if available.</p>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold mb-3 text-white">9. Moderation</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">Shadow Gecko may remove content, limit features, suspend accounts, or permanently ban accounts depending on the seriousness of the violation.</p>
+                    </div>
+                    <div class="bg-neon/5 border border-neon/10 rounded-xl p-4 text-sm text-gray-300 leading-relaxed">
+                        Gecko Launcher is built for creators and players. Help keep the community creative, safe, and respectful.
+                    </div>
+                </div>
+            </section>
+
+            <!-- ====== 10. SECURITY & ANTI-CHEAT ====== -->
+            <section id="security" class="doc-section mb-20 scroll-mt-24">
+                <div class="flex items-center gap-3 mb-8">
+                    <div class="w-10 h-10 rounded-xl bg-orange-500/10 border border-orange-500/20 flex items-center justify-center">
+                        <i data-lucide="lock" class="w-5 h-5 text-orange-400"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-2xl md:text-3xl font-bold">Security & Anti-Cheat Policy</h2>
+                        <span class="text-xs text-gray-500">Effective July 25, 2026</span>
+                    </div>
+                </div>
+                <div class="bg-white/[0.02] border border-white/5 rounded-2xl p-6 md:p-10 space-y-8">
+                    <div>
+                        <h3 class="text-lg font-bold mb-3 text-white">1. Purpose</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">Shadow Gecko works to maintain a safe and fair environment for players, creators, and developers.</p>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold mb-3 text-white">2. Prohibited Security Actions</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed mb-3">Users must not:</p>
+                        <ul class="space-y-2 text-gray-400 text-sm leading-relaxed">
+                            <li>Attempt to hack Gecko Launcher.</li>
+                            <li>Access unauthorized systems.</li>
+                            <li>Exploit security vulnerabilities.</li>
+                            <li>Modify services to gain unfair advantages.</li>
+                            <li>Distribute harmful software.</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold mb-3 text-white">3. Cheating</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed mb-3">Users must not:</p>
+                        <ul class="space-y-2 text-gray-400 text-sm leading-relaxed">
+                            <li>Use cheats or unauthorized tools.</li>
+                            <li>Manipulate game systems.</li>
+                            <li>Abuse bugs for unfair advantages.</li>
+                            <li>Modify games to harm other players.</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold mb-3 text-white">4. Reporting Security Problems</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed mb-3">If you discover a security issue:</p>
+                        <ul class="space-y-2 text-gray-400 text-sm leading-relaxed">
+                            <li>Report it privately to Shadow Gecko.</li>
+                            <li>Provide details about the problem.</li>
+                            <li>Do not use the issue to harm users.</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold mb-3 text-white">5. Enforcement</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">Shadow Gecko may remove harmful content, restrict accounts, ban users, or disable access to services. Actions depend on the severity of the issue.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ====== 11. MARKETPLACE RULES ====== -->
+            <section id="marketplace" class="doc-section mb-20 scroll-mt-24">
+                <div class="flex items-center gap-3 mb-8">
+                    <div class="w-10 h-10 rounded-xl bg-violet-500/10 border border-violet-500/20 flex items-center justify-center">
+                        <i data-lucide="store" class="w-5 h-5 text-violet-400"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-2xl md:text-3xl font-bold">Marketplace Rules</h2>
+                        <span class="text-xs text-gray-500">Effective July 25, 2026</span>
+                    </div>
+                </div>
+                <div class="bg-white/[0.02] border border-white/5 rounded-2xl p-6 md:p-10 space-y-8">
+                    <div>
+                        <h3 class="text-lg font-bold mb-3 text-white">1. Marketplace Purpose</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">The Gecko Launcher marketplace allows creators to share games and digital content with users.</p>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold mb-3 text-white">2. Creator Requirements</h3>
+                        <ul class="space-y-2 text-gray-400 text-sm leading-relaxed">
+                            <li>Own or have permission to use uploaded content.</li>
+                            <li>Provide accurate descriptions.</li>
+                            <li>Deliver safe files.</li>
+                            <li>Follow Gecko Launcher rules.</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold mb-3 text-white">3. Prohibited Marketplace Content</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed mb-3">Creators may not sell or distribute:</p>
+                        <ul class="space-y-2 text-gray-400 text-sm leading-relaxed">
+                            <li>Stolen games or malware.</li>
+                            <li>Illegal content or misleading products.</li>
+                            <li>Unauthorized copyrighted material.</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold mb-3 text-white">4. Pricing</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">Creators are responsible for setting appropriate prices. Shadow Gecko may provide pricing tools or recommendations but does not guarantee sales.</p>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold mb-3 text-white">5. Content Removal</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">Shadow Gecko may remove marketplace content that violates rules, creates security risks, or receives valid copyright complaints.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ====== 12. COOKIE POLICY ====== -->
+            <section id="cookies" class="doc-section mb-20 scroll-mt-24">
+                <div class="flex items-center gap-3 mb-8">
+                    <div class="w-10 h-10 rounded-xl bg-teal-500/10 border border-teal-500/20 flex items-center justify-center">
+                        <i data-lucide="cookie" class="w-5 h-5 text-teal-400"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-2xl md:text-3xl font-bold">Cookie Policy</h2>
+                        <span class="text-xs text-gray-500">Effective July 25, 2026</span>
+                    </div>
+                </div>
+                <div class="bg-white/[0.02] border border-white/5 rounded-2xl p-6 md:p-10 space-y-8">
+                    <div>
+                        <h3 class="text-lg font-bold mb-3 text-white">1. Introduction</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">This Cookie Policy explains how the Gecko Launcher website uses cookies and similar technologies.</p>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold mb-3 text-white">2. Website Data Collection</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed mb-3">Currently, the Gecko Launcher website does not store:</p>
+                        <ul class="space-y-2 text-gray-400 text-sm leading-relaxed">
+                            <li>User accounts.</li>
+                            <li>Personal profiles.</li>
+                            <li>Payment information.</li>
+                            <li>User activity history.</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold mb-3 text-white">3. Cookies</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed mb-3">The Gecko Launcher website does not currently use cookies for tracking users, advertising, creating user profiles, or storing personal information.</p>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold mb-3 text-white">4. Future Changes</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed mb-3">If Shadow Gecko adds features such as website accounts, analytics, login systems, or payment features, this Cookie Policy will be updated.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ====== 13. DEVELOPER API ====== -->
+            <section id="api" class="doc-section mb-20 scroll-mt-24">
+                <div class="flex items-center gap-3 mb-8">
+                    <div class="w-10 h-10 rounded-xl bg-sky-500/10 border border-sky-500/20 flex items-center justify-center">
+                        <i data-lucide="code" class="w-5 h-5 text-sky-400"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-2xl md:text-3xl font-bold">Developer API & Integration Agreement</h2>
+                        <span class="text-xs text-gray-500">Effective July 25, 2026</span>
+                    </div>
+                </div>
+                <div class="bg-white/[0.02] border border-white/5 rounded-2xl p-6 md:p-10 space-y-8">
+                    <div>
+                        <h3 class="text-lg font-bold mb-3 text-white">1. Introduction</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">This Agreement explains the rules for developers, creators, and third parties who create software, tools, integrations, plugins, extensions, or services that interact with Gecko Launcher. By accessing or using Gecko Launcher developer tools, you agree to this Agreement.</p>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold mb-3 text-white">2. Developer Access</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed mb-3">Shadow Gecko may provide developers with access to APIs, SDKs, documentation, developer tools, testing environments, and integration features. Access to developer tools may require approval or registration.</p>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold mb-3 text-white">3. Acceptable Use</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed mb-3">Developers must not use Gecko Launcher APIs, tools, or services to:</p>
+                        <ul class="space-y-2 text-gray-400 text-sm leading-relaxed">
+                            <li>Damage Gecko Launcher or overload/disrupt services.</li>
+                            <li>Access unauthorized data or bypass security systems.</li>
+                            <li>Create malicious software.</li>
+                            <li>Collect user information without permission.</li>
+                            <li>Violate user privacy.</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold mb-3 text-white">4. API Keys and Security</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed mb-3">Developers are responsible for protecting API keys and keeping authentication information secure. Developers must not share private API keys publicly, use another developer's credentials, or attempt to reverse engineer security systems.</p>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold mb-3 text-white">5. User Data and Privacy</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">Developers accessing Gecko Launcher data must respect user privacy, only collect necessary information, clearly explain data usage, and follow applicable privacy laws. Developers must not sell or misuse user information obtained through Gecko Launcher.</p>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold mb-3 text-white">6. Third-Party Applications</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">Third-party applications connected to Gecko Launcher must clearly identify themselves as third-party services, not falsely claim to be owned by Shadow Gecko, follow Gecko Launcher branding rules, and maintain user safety.</p>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold mb-3 text-white">7. Branding and Trademarks</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">Developers may not use Shadow Gecko or Gecko Launcher branding in a way that suggests official partnership without permission, misleads users, or damages the Gecko Launcher reputation.</p>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold mb-3 text-white">8. Security Issues</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">Developers who discover security problems should report them responsibly through official support channels. Developers must not publicly expose vulnerabilities before reporting them, use security issues to harm users, or exploit vulnerabilities for personal benefit.</p>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold mb-3 text-white">9–10. API Changes & Availability</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">Shadow Gecko may update APIs, change features, remove outdated systems, and limit access. Shadow Gecko will attempt to provide notice for major changes when possible. Shadow Gecko does not guarantee permanent API availability, error-free operation, unlimited access, or compatibility forever.</p>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold mb-3 text-white">11. Monetized Integrations</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">If developers create paid tools or integrations using Gecko Launcher, they are responsible for following applicable laws, providing accurate information, handling their own customers, and managing their own payments. Shadow Gecko does not guarantee income from third-party integrations.</p>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold mb-3 text-white">12. Prohibited Integrations</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed mb-3">Developers may not create integrations that:</p>
+                        <ul class="space-y-2 text-gray-400 text-sm leading-relaxed">
+                            <li>Enable cheating or circumvent platform rules.</li>
+                            <li>Distribute stolen games.</li>
+                            <li>Harm users or collect unauthorized data.</li>
+                            <li>Abuse Gecko Launcher systems.</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold mb-3 text-white">13–15. Suspension, IP & Liability</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">Shadow Gecko may restrict or remove developer access if this Agreement is violated, security risks are created, users are harmed, or services are abused. Developers retain ownership of their own software but do not receive ownership of Gecko Launcher intellectual property. To the maximum extent allowed by law, Shadow Gecko is not responsible for third-party applications, developer-created software, losses caused by external integrations, or problems caused by third-party services.</p>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold mb-3 text-white">16. Agreement Updates</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">Shadow Gecko may update this Agreement as Gecko Launcher develops. Continued use of developer services means acceptance of updated terms.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ====== CONTACT FOOTER ====== -->
+            <section id="contact" class="doc-section scroll-mt-24">
+                <div class="bg-gradient-to-br from-neon/5 to-blue-600/5 border border-white/10 rounded-2xl p-8 md:p-12 text-center">
+                    <div class="w-16 h-16 rounded-2xl bg-gradient-to-tr from-neon to-blue-500 flex items-center justify-center mx-auto mb-6">
+                        <span class="font-heading font-bold text-black text-2xl">G</span>
+                    </div>
+                    <h2 class="font-heading text-2xl md:text-3xl font-bold uppercase tracking-tight mb-3">Contact</h2>
+                    <p class="text-gray-400 text-sm leading-relaxed max-w-md mx-auto mb-6">For support, legal questions, privacy requests, or any other inquiries regarding these documents.</p>
+                    <div class="inline-flex flex-col sm:flex-row gap-4 text-sm">
+                        <div class="bg-white/[0.05] border border-white/10 rounded-xl px-5 py-3">
+                            <span class="text-gray-500 text-xs uppercase tracking-widest block mb-1">Organization</span>
+                            <span class="text-white font-medium">Shadow Gecko</span>
+                        </div>
+                        <div class="bg-white/[0.05] border border-white/10 rounded-xl px-5 py-3">
+                            <span class="text-gray-500 text-xs uppercase tracking-widest block mb-1">Project</span>
+                            <span class="text-white font-medium">Gecko Launcher</span>
+                        </div>
+                        <div class="bg-white/[0.05] border border-white/10 rounded-xl px-5 py-3">
+                            <span class="text-gray-500 text-xs uppercase tracking-widest block mb-1">Support</span>
+                            <span class="text-neon font-medium">Official Discord Server</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Copyright -->
+            <div class="mt-12 text-center text-xs text-gray-600">
+                <p>© 2026 Shadow Gecko. All rights reserved.</p>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- Back to top -->
+    <button id="backToTop" class="fixed bottom-6 right-6 z-50 w-10 h-10 rounded-full bg-neon/10 border border-neon/20 flex items-center justify-center text-neon opacity-0 translate-y-4 transition-all duration-300 hover:bg-neon/20 cursor-pointer" style="pointer-events:none;">
+        <i data-lucide="arrow-up" class="w-4 h-4"></i>
+    </button>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons({ attrs: { strokeWidth: 1.5 } });
+
+        // Navigation items
+        const navItems = [
+            { id: 'tos', label: 'Terms of Service', icon: 'scroll-text' },
+            { id: 'privacy', label: 'Privacy Policy', icon: 'shield-check' },
+            { id: 'trust', label: 'Trust & Safety', icon: 'shield-alert' },
+            { id: 'eula', label: 'EULA', icon: 'file-code' },
+            { id: 'reporting', label: 'Safety Reporting', icon: 'flag' },
+            { id: 'dpa', label: 'Data Processing', icon: 'database' },
+            { id: 'creator', label: 'Creator Agreement', icon: 'palette' },
+            { id: 'dmca', label: 'DMCA & Copyright', icon: 'copyright' },
+            { id: 'community', label: 'Community Guidelines', icon: 'users' },
+            { id: 'security', label: 'Security & Anti-Cheat', icon: 'lock' },
+            { id: 'marketplace', label: 'Marketplace Rules', icon: 'store' },
+            { id: 'cookies', label: 'Cookie Policy', icon: 'cookie' },
+            { id: 'api', label: 'Developer API', icon: 'code' },
+            { id: 'contact', label: 'Contact', icon: 'mail' },
+        ];
+
+        // Build sidebar nav
+        const sidebarNav = document.getElementById('sidebarNav');
+        navItems.forEach(item => {
+            const a = document.createElement('a');
+            a.href = `#${item.id}`;
+            a.className = 'nav-link block px-4 py-2.5 text-xs text-gray-400 transition-all';
+            a.dataset.section = item.id;
+            a.innerHTML = `<span class="flex items-center gap-2.5"><i data-lucide="${item.icon}" class="w-3.5 h-3.5 opacity-50"></i>${item.label}</span>`;
+            sidebarNav.appendChild(a);
+        });
+
+        // Build mobile nav
+        const mobileNav = document.getElementById('mobileNavLinks');
+        navItems.forEach(item => {
+            const a = document.createElement('a');
+            a.href = `#${item.id}`;
+            a.className = 'block px-4 py-2.5 text-sm text-gray-400 hover:text-neon transition-colors rounded-lg';
+            a.textContent = item.label;
+            a.addEventListener('click', () => {
+                document.getElementById('mobileToc').classList.remove('open');
+            });
+            mobileNav.appendChild(a);
+        });
+
+        // Re-init icons after dynamic content
+        lucide.createIcons({ attrs: { strokeWidth: 1.5 } });
+
+        // Mobile menu toggle
+        document.getElementById('mobileMenuBtn').addEventListener('click', () => {
+            document.getElementById('mobileToc').classList.toggle('open');
+        });
+
+        // Active section tracking with IntersectionObserver
+        const sections = document.querySelectorAll('.doc-section[id]');
+        const navLinks = document.querySelectorAll('.nav-link');
+
+        const observerOptions = {
+            root: null,
+            rootMargin: '-20% 0px -70% 0px',
+            threshold: 0
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const id = entry.target.id;
+                    navLinks.forEach(link => {
+                        link.classList.toggle('active', link.dataset.section === id);
+                    });
+                }
+            });
+        }, observerOptions);
+
+        sections.forEach(section => observer.observe(section));
+
+        // Back to top button
+        const backToTop = document.getElementById('backToTop');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 600) {
+                backToTop.style.opacity = '1';
+                backToTop.style.transform = 'translateY(0)';
+                backToTop.style.pointerEvents = 'auto';
+            } else {
+                backToTop.style.opacity = '0';
+                backToTop.style.transform = 'translateY(1rem)';
+                backToTop.style.pointerEvents = 'none';
+            }
+        });
+
+        backToTop.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // Close mobile menu on scroll
+        window.addEventListener('scroll', () => {
+            document.getElementById('mobileToc').classList.remove('open');
+        });
+    </script>
+</body>
+</html>
